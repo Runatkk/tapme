@@ -7,9 +7,9 @@ export async function LandingHero() {
   return (
     <section
       id="top"
-      className="relative mx-auto mt-6 max-w-6xl overflow-hidden rounded-2xl px-4 sm:px-6"
+      className="relative mx-auto mt-6 max-w-6xl overflow-hidden rounded px-4 sm:px-6"
     >
-      <div className="relative flex min-h-[420px] flex-col items-center justify-center gap-6 overflow-hidden rounded-2xl px-6 py-20 text-center text-white">
+      <div className="relative flex min-h-[420px] flex-col items-center justify-center gap-6 overflow-hidden rounded px-6 py-20 text-center text-white">
         <Image
           src="/landing-hero.jpg"
           alt=""
@@ -18,7 +18,13 @@ export async function LandingHero() {
           sizes="(max-width: 1152px) 100vw, 1152px"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-[#2D2170]/55" />
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              "linear-gradient(rgba(16, 22, 34, 0.42) 0%, rgba(16, 22, 34, 0.3) 45%, rgba(16, 22, 34, 0.46) 100%)",
+          }}
+        />
 
         <h1
           className="relative max-w-3xl text-2xl font-semibold leading-snug sm:text-3xl"

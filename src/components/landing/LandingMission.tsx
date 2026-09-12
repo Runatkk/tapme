@@ -15,7 +15,7 @@ export async function LandingMission() {
         {t("eyebrow")}
       </p>
       <h2
-        className="mt-3 max-w-3xl text-2xl font-semibold leading-snug text-[#1C1B28] sm:text-3xl"
+        className="mt-3 max-w-4xl text-2xl font-semibold leading-snug text-[#1C1B28] sm:text-3xl"
         style={{
           fontFamily:
             'var(--font-landing-heading), "Hiragino Mincho ProN", "Yu Mincho", Georgia, serif',
@@ -23,7 +23,7 @@ export async function LandingMission() {
       >
         {t("heading")}
       </h2>
-      <p className="mt-4 max-w-2xl text-sm text-[#6F6E80]">{t("subheading")}</p>
+      <p className="mt-4 max-w-3xl text-sm text-[#6F6E80]">{t("subheading")}</p>
 
       <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
         {cards.map((card, i) => {

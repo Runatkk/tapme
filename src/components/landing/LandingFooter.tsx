@@ -16,6 +16,11 @@ export async function LandingFooter() {
           <p className="mt-3 max-w-xs text-sm text-[#6F6E80]">
             {t("footer.description")}
           </p>
+          <div className="mt-4 flex h-6 w-6 items-center justify-center rounded border border-[#2D2170]/30 text-[#2D2170]">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4">
+              <path d="M4.98 3.5C4.98 4.88 3.9 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8.75h4V23h-4V8.75zM8.5 8.75h3.83v1.95h.05c.53-1 1.84-2.06 3.78-2.06 4.05 0 4.8 2.67 4.8 6.14V23h-4v-6.4c0-1.53-.03-3.5-2.13-3.5-2.14 0-2.47 1.67-2.47 3.39V23h-4V8.75z" />
+            </svg>
+          </div>
         </div>
 
         <div id="advisory">
