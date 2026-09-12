@@ -20,7 +20,10 @@ CMS機能を持つ簡易ホームページのトライアル実装です。Top�
    - `posts` テーブルの作成（`locale`・`translation_group_id`カラムを含む）
    - RLS（行レベルセキュリティ）ポリシーの設定（下書きは管理者のみ閲覧可）
    - サムネイル画像用の `thumbnails` Storageバケットの作成
-   - **既にschema.sqlを実行済みで、あとから多言語対応を追加する場合**は、代わりに[`supabase/migrations/0002_add_i18n.sql`](supabase/migrations/0002_add_i18n.sql)をSQL Editorで実行してください（`locale`・`translation_group_id`カラムの追加、slugのユニーク制約の変更を行います）
+   - Topページ編集用の `page_sections` テーブルの作成
+   - **既にschema.sqlを実行済みで、あとから機能を追加する場合**は、代わりに以下のマイグレーションを順にSQL Editorで実行してください
+     - [`supabase/migrations/0002_add_i18n.sql`](supabase/migrations/0002_add_i18n.sql)（多言語対応: `locale`・`translation_group_id`カラムの追加、slugのユニーク制約の変更）
+     - [`supabase/migrations/0003_add_page_sections.sql`](supabase/migrations/0003_add_page_sections.sql)（ホーム編集機能: `page_sections`テーブルの追加）
 4. 「Authentication > Users」から、管理者用のアカウント（メールアドレス＋パスワード）を1〜2件作成します。
    - サインアップ画面は用意していません。管理者アカウントはSupabaseダッシュボードから直接作成してください。
 
@@ -71,8 +74,13 @@ http://localhost:3000 にアクセスすると `/ja` にリダイレクトされ
 | `/admin/posts` | 記事一覧（日本語／Englishタブで言語ごとに表示切り替え） |
 | `/admin/posts/new?locale=ja\|en` | 新規記事作成 |
 | `/admin/posts/[id]` | 記事編集（対応する翻訳がある場合は切り替えタブ、無い場合は「English versionを新規作成」ボタンを表示） |
+| `/admin/home` | Topページのセクション管理（日本語／Englishタブ、上下ボタンで並び替え、表示/非表示切り替え） |
+| `/admin/home/new?locale=ja\|en&type=text\|image` | セクション追加（テキストブロック／画像ブロック） |
+| `/admin/home/[id]` | セクション編集 |
 
 記事編集画面ではタイトルからスラッグを自動生成（手動修正も可能）、Markdown入力とプレビューの切り替え、サムネイル画像のアップロード、公開/下書きの切り替えができます。日本語版の記事から「English versionを新規作成」すると、同じ`translation_group_id`を持つ英語版の下書きが作成され、そのまま編集画面に遷移します。
+
+「ホーム編集」で追加したセクションは、Topページのヒーロー（サイト名・紹介文）と「最新記事」の間に、上から順番に表示されます。ドラッグ&ドロップではなく上下ボタンでの並び替えです。作成直後は非表示になっているので、内容を確認してから「Topページに表示する」にチェックを入れて公開してください。
 
 ## デプロイ手順（Vercel）
 

@@ -13,3 +13,21 @@ export interface Post {
   created_at: string;
   updated_at: string;
 }
+
+export type SectionType = "text" | "image";
+
+export interface PageSection {
+  id: string;
+  page: "home";
+  locale: PostLocale;
+  type: SectionType;
+  position: number;
+  is_visible: boolean;
+  title: string | null;
+  body: string | null;
+  image_url: string | null;
+  image_alt: string | null;
+  caption: string | null;
+  created_at: string;
+  updated_at: string;
+}

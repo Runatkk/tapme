@@ -5,8 +5,8 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slugify";
 import { getPostByIdForAdmin, getTranslationSibling } from "@/lib/posts";
+import { uploadImageIfProvided } from "@/lib/upload-image";
 import type { PostLocale } from "@/lib/types";
-import type { SupabaseClient } from "@supabase/supabase-js";
 
 function isLocale(value: FormDataEntryValue | null): value is PostLocale {
   return value === "ja" || value === "en";
@@ -14,25 +14,6 @@ function isLocale(value: FormDataEntryValue | null): value is PostLocale {
 
 function otherLocale(locale: PostLocale): PostLocale {
   return locale === "ja" ? "en" : "ja";
-}
-
-async function uploadThumbnailIfProvided(
-  supabase: SupabaseClient,
-  file: File | null,
-): Promise<string | null> {
-  if (!file || file.size === 0) return null;
-
-  const ext = file.name.split(".").pop() || "jpg";
-  const path = `${crypto.randomUUID()}.${ext}`;
-
-  const { error } = await supabase.storage
-    .from("thumbnails")
-    .upload(path, file, { cacheControl: "3600", upsert: false });
-
-  if (error) throw new Error(`サムネイルのアップロードに失敗しました: ${error.message}`);
-
-  const { data } = supabase.storage.from("thumbnails").getPublicUrl(path);
-  return data.publicUrl;
 }
 
 function revalidatePublicPaths(locale: PostLocale, slug?: string) {
@@ -56,7 +37,7 @@ export async function createPost(formData: FormData) {
   if (!title) throw new Error("タイトルを入力してください。");
 
   const slug = slugify(slugInput || title);
-  const thumbnail_url = await uploadThumbnailIfProvided(supabase, thumbnailFile);
+  const thumbnail_url = await uploadImageIfProvided(supabase, thumbnailFile);
 
   const { error } = await supabase.from("posts").insert({
     title,
@@ -89,7 +70,7 @@ export async function updatePost(id: string, formData: FormData) {
   if (!title) throw new Error("タイトルを入力してください。");
 
   const slug = slugify(slugInput || title);
-  const uploadedUrl = await uploadThumbnailIfProvided(supabase, thumbnailFile);
+  const uploadedUrl = await uploadImageIfProvided(supabase, thumbnailFile);
   const thumbnail_url = uploadedUrl ?? existingThumbnailUrl;
 
   const { error } = await supabase

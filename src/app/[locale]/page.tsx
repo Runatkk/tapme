@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPublishedPosts } from "@/lib/posts";
+import { getVisibleSections } from "@/lib/sections";
 import { PostCard } from "@/components/PostCard";
+import { HomeSections } from "@/components/HomeSections";
 import { Link } from "@/i18n/navigation";
 import { buildAlternates } from "@/lib/alternates";
 import type { Locale } from "@/i18n/routing";
@@ -21,7 +23,10 @@ export default async function Home({ params }: Props) {
   setRequestLocale(locale);
 
   const t = await getTranslations();
-  const posts = await getPublishedPosts(locale, 5);
+  const [posts, sections] = await Promise.all([
+    getPublishedPosts(locale, 5),
+    getVisibleSections(locale),
+  ]);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
@@ -33,6 +38,8 @@ export default async function Home({ params }: Props) {
           {t("site.description")}
         </p>
       </section>
+
+      <HomeSections sections={sections} />
 
       <section>
         <div className="mb-4 flex items-center justify-between">
