@@ -1,0 +1,26 @@
+{
+  "site": {
+    "name": "トライアルサイト",
+    "description": "Next.js と Supabase で構築した、記事投稿型 CMS のトライアルサイトです。"
+  },
+  "nav": {
+    "home": "Top",
+    "posts": "記事一覧"
+  },
+  "home": {
+    "latestPosts": "最新記事",
+    "viewAll": "すべて見る →",
+    "noPosts": "まだ記事がありません。"
+  },
+  "posts": {
+    "title": "記事一覧"
+  },
+  "post": {
+    "viewInEnglish": "English",
+    "viewInJapanese": "日本語",
+    "translationPending": "この記事の英語版は準備中です"
+  },
+  "footer": {
+    "copyright": "© {year} {siteName}"
+  }
+}

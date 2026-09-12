@@ -4,14 +4,15 @@ import { useState, type ChangeEvent } from "react";
 import Image from "next/image";
 import { MarkdownContent } from "@/components/MarkdownContent";
 import { slugify } from "@/lib/slugify";
-import type { Post } from "@/lib/types";
+import type { Post, PostLocale } from "@/lib/types";
 
 type Props = {
   action: (formData: FormData) => void | Promise<void>;
   initialPost?: Post;
+  locale: PostLocale;
 };
 
-export function PostForm({ action, initialPost }: Props) {
+export function PostForm({ action, initialPost, locale }: Props) {
   const [title, setTitle] = useState(initialPost?.title ?? "");
   const [slug, setSlug] = useState(initialPost?.slug ?? "");
   const [slugTouched, setSlugTouched] = useState(false);
@@ -36,6 +37,7 @@ export function PostForm({ action, initialPost }: Props) {
 
   return (
     <form action={action} className="flex flex-col gap-6">
+      <input type="hidden" name="locale" value={locale} />
       {initialPost && (
         <input
           type="hidden"
@@ -43,6 +45,13 @@ export function PostForm({ action, initialPost }: Props) {
           value={initialPost.thumbnail_url ?? ""}
         />
       )}
+
+      <div className="flex items-center gap-2">
+        <span className="text-xs font-medium text-black/50">言語</span>
+        <span className="rounded-full bg-black/5 px-2 py-0.5 text-xs font-medium">
+          {locale === "en" ? "English" : "日本語"}
+        </span>
+      </div>
 
       <div className="flex flex-col gap-1">
         <label htmlFor="title" className="text-sm font-medium">
@@ -72,7 +81,9 @@ export function PostForm({ action, initialPost }: Props) {
           }}
           className="rounded-md border border-black/20 px-3 py-2 font-mono text-sm"
         />
-        <p className="text-xs text-black/40">/posts/{slug || "..."}</p>
+        <p className="text-xs text-black/40">
+          /{locale}/posts/{slug || "..."}
+        </p>
       </div>
 
       <div className="flex flex-col gap-1">

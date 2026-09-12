@@ -1,0 +1,26 @@
+{
+  "site": {
+    "name": "Trial Site",
+    "description": "A trial CMS-powered site built with Next.js and Supabase."
+  },
+  "nav": {
+    "home": "Top",
+    "posts": "Posts"
+  },
+  "home": {
+    "latestPosts": "Latest Posts",
+    "viewAll": "View all →",
+    "noPosts": "No posts yet."
+  },
+  "posts": {
+    "title": "Posts"
+  },
+  "post": {
+    "viewInEnglish": "English",
+    "viewInJapanese": "日本語",
+    "translationPending": "This post is not yet available in English"
+  },
+  "footer": {
+    "copyright": "© {year} {siteName}"
+  }
+}

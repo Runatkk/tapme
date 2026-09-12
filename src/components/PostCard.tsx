@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import type { Post } from "@/lib/types";
 import { formatDate } from "@/lib/format-date";
+import { Link } from "@/i18n/navigation";
 
 export function PostCard({ post }: { post: Post }) {
   return (
@@ -26,7 +26,7 @@ export function PostCard({ post }: { post: Post }) {
       </div>
       <div className="flex flex-1 flex-col gap-1 p-4">
         <time className="text-xs text-black/50">
-          {formatDate(post.created_at)}
+          {formatDate(post.created_at, post.locale)}
         </time>
         <h3 className="line-clamp-2 font-semibold group-hover:underline">
           {post.title}

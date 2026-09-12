@@ -1,19 +1,21 @@
-import Link from "next/link";
-import { siteConfig } from "@/lib/site";
+import { getTranslations } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 
-export function Header() {
+export async function Header() {
+  const t = await getTranslations();
+
   return (
     <header className="border-b border-black/10 bg-white/80 backdrop-blur sticky top-0 z-10">
       <div className="mx-auto flex max-w-3xl items-center justify-between px-4 py-4 sm:px-6">
         <Link href="/" className="text-lg font-bold tracking-tight">
-          {siteConfig.name}
+          {t("site.name")}
         </Link>
         <nav className="flex gap-4 text-sm">
           <Link href="/" className="hover:underline">
-            Top
+            {t("nav.home")}
           </Link>
           <Link href="/posts" className="hover:underline">
-            記事一覧
+            {t("nav.posts")}
           </Link>
         </nav>
       </div>

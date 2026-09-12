@@ -4,7 +4,17 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { slugify } from "@/lib/slugify";
+import { getPostByIdForAdmin, getTranslationSibling } from "@/lib/posts";
+import type { PostLocale } from "@/lib/types";
 import type { SupabaseClient } from "@supabase/supabase-js";
+
+function isLocale(value: FormDataEntryValue | null): value is PostLocale {
+  return value === "ja" || value === "en";
+}
+
+function otherLocale(locale: PostLocale): PostLocale {
+  return locale === "ja" ? "en" : "ja";
+}
 
 async function uploadThumbnailIfProvided(
   supabase: SupabaseClient,
@@ -25,11 +35,11 @@ async function uploadThumbnailIfProvided(
   return data.publicUrl;
 }
 
-function revalidatePublicPaths(slug?: string) {
-  revalidatePath("/");
-  revalidatePath("/posts");
+function revalidatePublicPaths(locale: PostLocale, slug?: string) {
+  revalidatePath(`/${locale}`);
+  revalidatePath(`/${locale}/posts`);
   revalidatePath("/admin/posts");
-  if (slug) revalidatePath(`/posts/${slug}`);
+  if (slug) revalidatePath(`/${locale}/posts/${slug}`);
 }
 
 export async function createPost(formData: FormData) {
@@ -40,6 +50,8 @@ export async function createPost(formData: FormData) {
   const body = String(formData.get("body") ?? "");
   const status = formData.get("status") === "published" ? "published" : "draft";
   const thumbnailFile = formData.get("thumbnail") as File | null;
+  const localeField = formData.get("locale");
+  const locale: PostLocale = isLocale(localeField) ? localeField : "ja";
 
   if (!title) throw new Error("タイトルを入力してください。");
 
@@ -51,13 +63,14 @@ export async function createPost(formData: FormData) {
     slug,
     body,
     status,
+    locale,
     thumbnail_url,
   });
 
   if (error) throw new Error(error.message);
 
-  revalidatePublicPaths(slug);
-  redirect("/admin/posts");
+  revalidatePublicPaths(locale, slug);
+  redirect(`/admin/posts?locale=${locale}`);
 }
 
 export async function updatePost(id: string, formData: FormData) {
@@ -70,6 +83,8 @@ export async function updatePost(id: string, formData: FormData) {
   const thumbnailFile = formData.get("thumbnail") as File | null;
   const existingThumbnailUrl =
     String(formData.get("existing_thumbnail_url") ?? "") || null;
+  const localeField = formData.get("locale");
+  const locale: PostLocale = isLocale(localeField) ? localeField : "ja";
 
   if (!title) throw new Error("タイトルを入力してください。");
 
@@ -84,13 +99,48 @@ export async function updatePost(id: string, formData: FormData) {
 
   if (error) throw new Error(error.message);
 
-  revalidatePublicPaths(slug);
-  redirect("/admin/posts");
+  revalidatePublicPaths(locale, slug);
+  redirect(`/admin/posts?locale=${locale}`);
 }
 
-export async function deletePost(id: string) {
+export async function deletePost(id: string, locale: PostLocale) {
   const supabase = await createClient();
   const { error } = await supabase.from("posts").delete().eq("id", id);
   if (error) throw new Error(error.message);
-  revalidatePublicPaths();
+  revalidatePublicPaths(locale);
+}
+
+export async function createTranslation(sourceId: string) {
+  const source = await getPostByIdForAdmin(sourceId);
+  if (!source) throw new Error("元の記事が見つかりません。");
+
+  const targetLocale = otherLocale(source.locale);
+
+  const existingSibling = await getTranslationSibling(
+    source.translation_group_id,
+    targetLocale,
+  );
+  if (existingSibling) {
+    redirect(`/admin/posts/${existingSibling.id}`);
+  }
+
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("posts")
+    .insert({
+      title: source.title,
+      slug: source.slug,
+      body: "",
+      status: "draft",
+      locale: targetLocale,
+      translation_group_id: source.translation_group_id,
+      thumbnail_url: source.thumbnail_url,
+    })
+    .select("id")
+    .single();
+
+  if (error) throw new Error(error.message);
+
+  revalidatePath("/admin/posts");
+  redirect(`/admin/posts/${data.id}`);
 }

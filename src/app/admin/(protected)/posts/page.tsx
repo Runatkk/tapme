@@ -3,24 +3,53 @@ import type { Metadata } from "next";
 import { getAllPostsForAdmin } from "@/lib/posts";
 import { formatDate } from "@/lib/format-date";
 import { DeleteButton } from "./delete-button";
+import type { PostLocale } from "@/lib/types";
 
 export const metadata: Metadata = {
   title: "記事管理",
 };
 
-export default async function AdminPostsPage() {
-  const posts = await getAllPostsForAdmin();
+const LOCALE_TABS: { value: PostLocale; label: string }[] = [
+  { value: "ja", label: "日本語" },
+  { value: "en", label: "English" },
+];
+
+type Props = {
+  searchParams: Promise<{ locale?: string }>;
+};
+
+export default async function AdminPostsPage({ searchParams }: Props) {
+  const { locale: localeParam } = await searchParams;
+  const locale: PostLocale = localeParam === "en" ? "en" : "ja";
+
+  const posts = await getAllPostsForAdmin(locale);
 
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-2xl font-bold">記事管理</h1>
         <Link
-          href="/admin/posts/new"
+          href={`/admin/posts/new?locale=${locale}`}
           className="rounded-md bg-black px-4 py-2 text-sm font-medium text-white"
         >
           新規作成
         </Link>
+      </div>
+
+      <div className="mb-6 flex gap-1 border-b border-black/10">
+        {LOCALE_TABS.map((tab) => (
+          <Link
+            key={tab.value}
+            href={`/admin/posts?locale=${tab.value}`}
+            className={`px-4 py-2 text-sm font-medium ${
+              locale === tab.value
+                ? "border-b-2 border-black text-black"
+                : "text-black/50 hover:text-black"
+            }`}
+          >
+            {tab.label}
+          </Link>
+        ))}
       </div>
 
       {posts.length === 0 ? (
@@ -65,7 +94,7 @@ export default async function AdminPostsPage() {
                       >
                         編集
                       </Link>
-                      <DeleteButton id={post.id} />
+                      <DeleteButton id={post.id} locale={post.locale} />
                     </div>
                   </td>
                 </tr>

@@ -5,16 +5,22 @@
 create table if not exists public.posts (
   id uuid primary key default gen_random_uuid(),
   title text not null,
-  slug text not null unique,
+  slug text not null,
   body text not null default '',
   thumbnail_url text,
   status text not null default 'draft' check (status in ('draft', 'published')),
+  locale text not null default 'ja' check (locale in ('ja', 'en')),
+  translation_group_id uuid not null default gen_random_uuid(),
   created_at timestamptz not null default now(),
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  constraint posts_locale_slug_key unique (locale, slug)
 );
 
-create index if not exists posts_status_created_at_idx
-  on public.posts (status, created_at desc);
+create index if not exists posts_locale_status_created_at_idx
+  on public.posts (locale, status, created_at desc);
+
+create index if not exists posts_translation_group_id_idx
+  on public.posts (translation_group_id);
 
 -- 2. updated_at を自動更新するトリガー
 create or replace function public.set_updated_at()
