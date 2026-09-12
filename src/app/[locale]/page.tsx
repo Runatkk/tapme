@@ -2,10 +2,15 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPublishedPosts } from "@/lib/posts";
 import { getVisibleSections } from "@/lib/sections";
-import { PostCard } from "@/components/PostCard";
 import { HomeSections } from "@/components/HomeSections";
-import { Link } from "@/i18n/navigation";
 import { buildAlternates } from "@/lib/alternates";
+import { headingFont, sourceSans } from "@/components/landing/fonts";
+import { LandingHeader } from "@/components/landing/LandingHeader";
+import { LandingHero } from "@/components/landing/LandingHero";
+import { LandingMission } from "@/components/landing/LandingMission";
+import { LandingNews } from "@/components/landing/LandingNews";
+import { LandingCta } from "@/components/landing/LandingCta";
+import { LandingFooter } from "@/components/landing/LandingFooter";
 import type { Locale } from "@/i18n/routing";
 
 type Props = {
@@ -22,43 +27,41 @@ export default async function Home({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const t = await getTranslations();
+  const tLanding = await getTranslations("landing");
   const [posts, sections] = await Promise.all([
-    getPublishedPosts(locale, 5),
+    getPublishedPosts(locale),
     getVisibleSections(locale),
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <section className="mb-12 text-center">
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">
-          {t("site.name")}
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-black/60">
-          {t("site.description")}
-        </p>
-      </section>
+    <div
+      className={`${headingFont.variable} ${sourceSans.variable} flex flex-1 flex-col bg-[#F5F5F7] text-[#1C1B28]`}
+      style={{
+        fontFamily:
+          'var(--font-landing-body), "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", Meiryo, system-ui, sans-serif',
+      }}
+    >
+      <LandingHeader locale={locale} />
+      <LandingHero />
 
-      <HomeSections sections={sections} />
-
-      <section>
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-xl font-semibold">{t("home.latestPosts")}</h2>
-          <Link href="/posts" className="text-sm text-black/60 hover:underline">
-            {t("home.viewAll")}
-          </Link>
+      {sections.length > 0 && (
+        <div className="mx-auto w-full max-w-3xl px-4 pt-16 sm:px-6">
+          <HomeSections sections={sections} />
         </div>
+      )}
 
-        {posts.length === 0 ? (
-          <p className="text-sm text-black/50">{t("home.noPosts")}</p>
-        ) : (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-            {posts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        )}
-      </section>
+      <LandingMission />
+      <LandingNews
+        posts={posts}
+        copy={{
+          heading: tLanding("news.heading"),
+          subheading: tLanding("news.subheading"),
+          viewAll: tLanding("news.viewAll"),
+          empty: tLanding("news.empty"),
+        }}
+      />
+      <LandingCta />
+      <LandingFooter />
     </div>
   );
 }

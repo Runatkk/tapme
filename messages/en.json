@@ -22,5 +22,80 @@
   },
   "footer": {
     "copyright": "© {year} {siteName}"
+  },
+  "landing": {
+    "brand": "MORI ASSOCIATES",
+    "nav": {
+      "home": "Home",
+      "advisory": "GRC Advisory",
+      "academy": "GRC Academy",
+      "news": "News & Topics",
+      "contact": "Contact Us"
+    },
+    "hero": {
+      "title": "GRC Advisory 毛利事務所（MORI Associates - GRC Advisory）",
+      "subtitleLine1": "Thought Leadership in Practice",
+      "subtitleLine2": "on",
+      "subtitleLine3": "GRC (Governance, Risk, Compliance) and Internal Audit",
+      "primaryCta": "GRC Academy",
+      "secondaryCta": "GRC Advisory"
+    },
+    "mission": {
+      "eyebrow": "OUR MISSION",
+      "heading": "Strengthening the global competitiveness of Japanese companies by providing practical knowledge on GRC and internal audit grounded in theory (through GRC Academy) and offering specialized advisory services (through GRC Advisory).",
+      "subheading": "GRC および内部監査に関する理論を踏まえた実践知の提供（GRC Academy）、および専門的なアドバイザリーサービスの提供（GRC Advisory）を通じて日本企業のグローバルな競争力を強化する",
+      "cards": [
+        {
+          "title": "International Competitiveness",
+          "description": "Enhancing your global standing through strategic governance frameworks that meet world-class standards."
+        },
+        {
+          "title": "Regulatory Alignment",
+          "description": "Ensuring seamless compliance across jurisdictions with evolving international legal and ethical standards."
+        },
+        {
+          "title": "Corporate Resilience",
+          "description": "Building robust risk management systems for long-term operational stability and stakeholder confidence."
+        }
+      ]
+    },
+    "news": {
+      "heading": "News & Topics",
+      "subheading": "Latest insights and regulatory updates from our experts.",
+      "viewAll": "VIEW ALL NEWS",
+      "empty": "No posts yet."
+    },
+    "cta": {
+      "heading": "Ready to fortify your corporate future?",
+      "subheading": "Our experts are standing by to help you navigate the complexities of global governance and risk management.",
+      "primary": "Get a Consultation",
+      "secondary": "Download Capability Statement"
+    },
+    "footer": {
+      "description": "Excellence in GRC advisory services for the world's most ambitious organizations.",
+      "advisoryHeading": "GRC Advisory",
+      "advisoryLinks": [
+        "Representative（毛利正人）",
+        "Our Services",
+        "Case Studies",
+        "Access",
+        "Contact Us"
+      ],
+      "academyHeading": "GRC Academy",
+      "academyLinks": [
+        "Seminars",
+        "On-line Library",
+        "Publications",
+        "Library",
+        "Categories (International Management / GRC / Internal Audit)"
+      ],
+      "contactHeading": "Contact",
+      "email": "contact@moriassociates.com",
+      "phone": "+81 (0)3-0000-0000",
+      "address": "Tokyo, Japan",
+      "copyright": "© {year} MORI ASSOCIATES GRC ADVISORY. ALL RIGHTS RESERVED.",
+      "privacyPolicy": "PRIVACY POLICY",
+      "termsOfService": "TERMS OF SERVICE"
+    }
   }
 }

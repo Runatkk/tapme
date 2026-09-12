@@ -39,9 +39,12 @@ cp .env.local.example .env.local
 NEXT_PUBLIC_SUPABASE_URL=あなたのプロジェクトURL
 NEXT_PUBLIC_SUPABASE_ANON_KEY=あなたのanon/publishable key
 NEXT_PUBLIC_SITE_URL=https://your-site.vercel.app
+SITE_PASSWORD=
 ```
 
 `NEXT_PUBLIC_SITE_URL`はhreflangタグなどのURL生成に使われます。ローカル開発では`http://localhost:3000`のままで構いません。
+
+`SITE_PASSWORD`に何か値を設定すると、サイト全体（`/admin`含む）がパスワード保護されます。未設定であれば誰でも閲覧できます。
 
 `.env.local` は `.gitignore` に含まれているため、Gitにコミットされません。
 
@@ -65,6 +68,8 @@ http://localhost:3000 にアクセスすると `/ja` にリダイレクトされ
 | `/ja/posts/[slug]`, `/en/posts/[slug]` | 記事詳細（対応する翻訳があれば言語切り替えリンクを表示） |
 
 `/`や`/posts`など言語プレフィックスの無いパスにアクセスすると、デフォルト言語（`/ja`）にリダイレクトされます。
+
+`SITE_PASSWORD`を設定している場合、これらのページも含めサイト全体が`/site-login`でのパスワード入力を求められます（検索エンジン向けには`robots.txt`と`noindex`タグでインデックスを拒否しています）。
 
 ### 管理側（ログイン必須、日本語UI固定）
 
@@ -90,6 +95,7 @@ http://localhost:3000 にアクセスすると `/ja` にリダイレクトされ
    - `NEXT_PUBLIC_SUPABASE_URL`
    - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
    - `NEXT_PUBLIC_SITE_URL`（デプロイ後のURL、例: `https://tapme-xi.vercel.app`）
+   - `SITE_PASSWORD`（サイトを限定公開にする場合。任意の文字列を設定）
 4. 「Deploy」を実行すると `〇〇.vercel.app` のURLで公開されます。
 5. 独自ドメインを使う場合は、Vercelの「Domains」設定から接続します。
 

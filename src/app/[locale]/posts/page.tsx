@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { getPublishedPosts } from "@/lib/posts";
 import { PostCard } from "@/components/PostCard";
+import { PublicChrome } from "@/components/PublicChrome";
 import { buildAlternates } from "@/lib/alternates";
 import type { Locale } from "@/i18n/routing";
 
@@ -26,18 +27,20 @@ export default async function PostsPage({ params }: Props) {
   const posts = await getPublishedPosts(locale);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
-      <h1 className="mb-8 text-2xl font-bold">{t("posts.title")}</h1>
+    <PublicChrome>
+      <div className="mx-auto max-w-3xl px-4 py-12 sm:px-6">
+        <h1 className="mb-8 text-2xl font-bold">{t("posts.title")}</h1>
 
-      {posts.length === 0 ? (
-        <p className="text-sm text-black/50">{t("home.noPosts")}</p>
-      ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
-      )}
-    </div>
+        {posts.length === 0 ? (
+          <p className="text-sm text-black/50">{t("home.noPosts")}</p>
+        ) : (
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+            {posts.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
+        )}
+      </div>
+    </PublicChrome>
   );
 }

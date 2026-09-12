@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../globals.css";
-import ja from "../../../messages/ja.json";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,17 +13,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: `管理画面 | ${ja.site.name}`,
-    template: `%s | ${ja.site.name}`,
-  },
+  title: "パスワードの入力",
   robots: {
     index: false,
     follow: false,
   },
 };
 
-export default function AdminRootLayout({
+export default function SiteLoginLayout({
   children,
 }: {
   children: React.ReactNode;

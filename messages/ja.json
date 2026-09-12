@@ -22,5 +22,80 @@
   },
   "footer": {
     "copyright": "© {year} {siteName}"
+  },
+  "landing": {
+    "brand": "MORI ASSOCIATES",
+    "nav": {
+      "home": "Home",
+      "advisory": "GRC Advisory",
+      "academy": "GRC Academy",
+      "news": "News & Topics",
+      "contact": "お問い合わせ"
+    },
+    "hero": {
+      "title": "GRC Advisory 毛利事務所（MORI Associates - GRC Advisory）",
+      "subtitleLine1": "Thought Leadership in Practice",
+      "subtitleLine2": "on",
+      "subtitleLine3": "GRC (Governance, Risk, Compliance) and Internal Audit",
+      "primaryCta": "GRC Academy",
+      "secondaryCta": "GRC Advisory"
+    },
+    "mission": {
+      "eyebrow": "OUR MISSION",
+      "heading": "GRC および内部監査に関する理論を踏まえた実践知の提供（GRC Academy）、および専門的なアドバイザリーサービスの提供（GRC Advisory）を通じて日本企業のグローバルな競争力を強化する。",
+      "subheading": "Strengthening the global competitiveness of Japanese companies by providing practical knowledge on GRC and internal audit grounded in theory (through GRC Academy) and offering specialized advisory services (through GRC Advisory).",
+      "cards": [
+        {
+          "title": "International Competitiveness",
+          "description": "世界水準の統治の枠組みによって、グローバルにおける立ち位置を強くする。"
+        },
+        {
+          "title": "Regulatory Alignment",
+          "description": "変化し続ける国際的な法規制・倫理基準に、法域をまたいで隙なく適合させる。"
+        },
+        {
+          "title": "Corporate Resilience",
+          "description": "長期にわたる事業の安定と、ステークホルダーの信頼を支えるリスク管理体制を築く。"
+        }
+      ]
+    },
+    "news": {
+      "heading": "News & Topics",
+      "subheading": "セミナー・出版物・記事の最新のお知らせ",
+      "viewAll": "すべてのお知らせ",
+      "empty": "まだ記事がありません。"
+    },
+    "cta": {
+      "heading": "貴社の未来を、確かなものに。",
+      "subheading": "グローバルなガバナンスとリスクマネジメントの複雑さを解きほぐすところから、ご一緒します。",
+      "primary": "ご相談のお問い合わせ",
+      "secondary": "事務所案内をダウンロード"
+    },
+    "footer": {
+      "description": "GRC および内部監査における実践知と、専門的なアドバイザリーサービスを提供しています。",
+      "advisoryHeading": "GRC Advisory",
+      "advisoryLinks": [
+        "Representative（毛利正人）",
+        "業務内容 Our Services",
+        "ご支援事例紹介",
+        "アクセス Access",
+        "お問い合わせ Contact Us"
+      ],
+      "academyHeading": "GRC Academy",
+      "academyLinks": [
+        "セミナーのお知らせ",
+        "On-line Library",
+        "出版物",
+        "図書館",
+        "記事カテゴリ（国際経営／GRC／内部監査）"
+      ],
+      "contactHeading": "Contact",
+      "email": "contact@moriassociates.com",
+      "phone": "+81 (0)3-0000-0000",
+      "address": "東京都",
+      "copyright": "© {year} MORI ASSOCIATES GRC ADVISORY. ALL RIGHTS RESERVED.",
+      "privacyPolicy": "プライバシーポリシー",
+      "termsOfService": "利用規約"
+    }
   }
 }
